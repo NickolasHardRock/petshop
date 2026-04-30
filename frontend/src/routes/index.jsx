@@ -1,12 +1,25 @@
 import { Routes, Route } from "react-router-dom";
 import Login from '../pages/login'
 import Dashboard from '../pages/dashboard'
+import PrivateRoute from "./PrivateRoute";
+import Pets from "../pages/pets";
 
 function AppRoutes(){
     return(
         <Routes>
             <Route path='/' element={<Login></Login>}></Route>
-            <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
+            <Route path='/dashboard' 
+                element={
+                <PrivateRoute>
+                <Dashboard/>
+                </PrivateRoute>
+            }></Route>
+            <Route path='/pets' element={
+                <PrivateRoute>
+                <Pets/>
+                </PrivateRoute>
+            }></Route>
+            
         </Routes>
     )
 }

@@ -1,13 +1,35 @@
 import e from "cors";
-import { useState } from "react";
+import { useState,useContext, use } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
+
 
 function Login(){
 
+
+    const {login} = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const [email,setEmail] = useState('')
     const [password,setpassword] = useState('')
+    const [error,setError] = useState('');
+    const [loading,setLoading] = useState(false)
 
-    function handleSubmit(e){
+
+    async function handleSubmit(e){
         e.preventDefault()
+        setError("")
+        setLoading(true)
+
+        try{
+            await login(email,password)
+            navigate('/dashboard')
+        }catch{
+            setError('Email ou senha invalidos')
+        }finally{
+            setLoading(false)
+        }
+
         console.log({email,password})
     }
 
@@ -31,7 +53,9 @@ function Login(){
                 onChange={(e)=>setpassword(e.target.value)}>
                 </input>
 
-            <button type="submitn">
+
+            {error && <p>{error}</p>}
+            <button type="submitn" disabled={loading}>
                 Entrar
             </button>
 
