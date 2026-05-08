@@ -5,7 +5,7 @@ const sequelize = require('./config/database');
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexao com MySQL estabelecida com sucesso.');
+    console.log('Conexao com Postgres estabelecida com sucesso.');
 
     app.listen(env.port, () => {
       console.log(`Servidor executando na porta ${env.port}.`);
