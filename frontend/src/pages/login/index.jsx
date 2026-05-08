@@ -2,6 +2,7 @@ import e from "cors";
 import { useState,useContext, use } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import './style.css'
 
 
 function Login(){
@@ -54,7 +55,7 @@ function Login(){
                 </input>
 
 
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             <button type="submitn" disabled={loading}>
                 Entrar
             </button>

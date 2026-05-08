@@ -1,0 +1,93 @@
+:root{
+    --primary-color: #4a90e2;
+    --secondary-color: #2c3e50;
+    --acent-color: #27ae60;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --text-color:#333333;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1)
+}
+
+/* Laouyt basico para todas f4f7f6*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/*--  Componentes Comuns --*/
+
+/*Inpust*/
+
+input{
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus{
+    border-color: var(--primary-color);
+}
+
+/*Botões*/
+
+button{
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: var(--primary-color);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+button:hover{
+    opacity: 0.9;
+}
+button:active{
+    transform: scale(0.98);
+}
+button:disabled{
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/*--- Footer ---*/
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative; /* Ou absolute/fixed dependendo do layout */
+  bottom: 0;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
