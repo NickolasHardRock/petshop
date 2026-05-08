@@ -54,7 +54,7 @@ function Login(){
                 </input>
 
 
-            {error && <p>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
             <button type="submitn" disabled={loading}>
                 Entrar
             </button>

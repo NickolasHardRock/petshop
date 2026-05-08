@@ -16,7 +16,7 @@ function MainLayout() {
     }
 
     return (
-        <div>
+        <div className="app-container">
             <aside>
                 <h2>
                     PetShop
@@ -30,9 +30,10 @@ function MainLayout() {
                     <Link to="/#">Usuarios</Link>
                 </nav>
             </aside>
-            <div>
+            <main className="main-content">
                 <button onClick={handleLogout}>Sair</button>
-            </div>
+                <Outlet/>
+            </main >
 
         </div>
     )
