@@ -25,11 +25,9 @@ module.exports = {
   env: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 3000,
   db: {
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: Number(process.env.DB_PORT) || 3306,
-    name: process.env.DB_NAME || 'petshop_db',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    dialect: process.env.DB_DIALECT || 'sqlite',
+    storage: process.env.DB_STORAGE || './database.sqlite',
+    storageTest: process.env.DB_STORAGE_TEST || './database.test.sqlite',
     logging: toBool(process.env.DB_LOGGING, false),
   },
   auth: {

@@ -1,12 +1,9 @@
-﻿require('dotenv').config();
+﻿const path = require('path');
+require('dotenv').config();
 
 const shared = {
-  username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'petshop_db',
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: Number(process.env.DB_PORT) || 3306,
-  dialect: 'mysql',
+  dialect: 'sqlite',
+  storage: process.env.DB_STORAGE || path.resolve(__dirname, '../../database.sqlite'),
   logging: (process.env.DB_LOGGING || 'false') === 'true',
   define: {
     underscored: true,
@@ -18,7 +15,7 @@ module.exports = {
   development: shared,
   test: {
     ...shared,
-    database: `${shared.database}_test`,
+    storage: process.env.DB_STORAGE_TEST || path.resolve(__dirname, '../../database.test.sqlite'),
   },
   production: shared,
 };

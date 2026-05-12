@@ -1,7 +1,7 @@
 {
   "name": "pets",
   "version": "1.0.0",
-  "description": "Backend de sistema de petshop com Node.js, Express, Sequelize, MySQL, Swagger e Axios.",
+  "description": "Backend de sistema de petshop com Node.js, Express, Sequelize, SQLite, Swagger e Axios.",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
@@ -16,7 +16,7 @@
     "nodejs",
     "express",
     "sequelize",
-    "mysql",
+    "sqlite",
     "swagger",
     "petshop"
   ],
@@ -32,8 +32,8 @@
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
-    "mysql2": "^3.22.2",
     "sequelize": "^6.37.8",
+    "sqlite3": "^5.1.6",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },

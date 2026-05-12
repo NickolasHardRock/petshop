@@ -1,20 +1,21 @@
-﻿const mysql = require('mysql2/promise');
+﻿const fs = require('fs');
+const path = require('path');
 const env = require('../config/env');
 
 const createDatabase = async () => {
-  const connection = await mysql.createConnection({
-    host: env.db.host,
-    port: env.db.port,
-    user: env.db.user,
-    password: env.db.password,
-  });
+  const dbPath = path.resolve(process.cwd(), env.db.storage || './database.sqlite');
+  const dbDir = path.dirname(dbPath);
 
-  await connection.query(
-    `CREATE DATABASE IF NOT EXISTS \`${env.db.name}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
-  );
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
 
-  await connection.end();
-  console.log(`Banco ${env.db.name} criado ou ja existente.`);
+  if (!fs.existsSync(dbPath)) {
+    fs.writeFileSync(dbPath, '');
+    console.log(`Arquivo de banco criado em ${dbPath}`);
+  } else {
+    console.log(`Arquivo de banco já existe em ${dbPath}`);
+  }
 };
 
 createDatabase().catch((error) => {

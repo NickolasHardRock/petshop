@@ -1,6 +1,6 @@
 # Petshop Backend
 
-Backend completo para um sistema de petshop com Node.js, Express, Sequelize, MySQL, Swagger, Axios e autenticacao JWT.
+Backend completo para um sistema de petshop com Node.js, Express, Sequelize, SQLite, Swagger, Axios e autenticacao JWT.
 
 ## O que o projeto faz
 
@@ -19,7 +19,7 @@ Esta API permite:
 - Node.js
 - Express.js
 - Sequelize
-- MySQL
+- SQLite
 - Swagger UI Express
 - Axios
 - express-validator
@@ -57,7 +57,6 @@ Esta API permite:
 ## Requisitos
 
 - Node.js 18+
-- MySQL 8+ ou compativel
 - npm
 
 ## Como instalar
@@ -74,19 +73,17 @@ npm install
 Copy-Item .env.example .env
 ```
 
-2. Ajuste os valores conforme seu ambiente MySQL.
+2. Ajuste os valores conforme seu ambiente SQLite ou use as configurações padrão.
 
 Exemplo:
 
 ```env
 NODE_ENV=development
 PORT=3000
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_NAME=petshop_db
-DB_USER=root
-DB_PASSWORD=senha_mysql
 DB_LOGGING=false
+DB_DIALECT=sqlite
+DB_STORAGE=./database.sqlite
+DB_STORAGE_TEST=./database.test.sqlite
 CORS_ORIGINS=http://localhost:5173,http://localhost:5174
 JWT_SECRET=uma_chave_segura
 JWT_EXPIRES_IN=1d
@@ -104,9 +101,9 @@ Voce pode criar o banco de duas formas:
 npm run db:create
 ```
 
-### Opcao 2: SQL manual
+### Opcao 2: arquivo local SQLite
 
-Execute o arquivo `database/init.sql` no seu MySQL.
+O arquivo de banco SQLite é criado automaticamente em `database.sqlite`.
 
 ## Como rodar migrations
 

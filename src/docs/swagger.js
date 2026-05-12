@@ -55,7 +55,7 @@ module.exports = (serverUrl) => ({
     title: 'Petshop Backend API',
     version: '1.0.0',
     description:
-      'Backend de petshop com Node.js, Express, Sequelize, MySQL, Swagger, Axios e autenticacao JWT.',
+      'Backend de petshop com Node.js, Express, Sequelize, SQLite, Swagger, Axios e autenticacao JWT.',
   },
   servers: [{ url: serverUrl, description: 'Servidor local' }],
   tags: [
