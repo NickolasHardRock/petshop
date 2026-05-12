@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ownersService, petsService } from '../../services/resourcesService'
+import { ownersService, petsService } from '../../services/petsService'
 
 const emptyForm = {
     name: '',
