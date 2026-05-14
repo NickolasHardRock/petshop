@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ownersService } from '../services/resourcesService';
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import {  ownersService } from '../../services/resoucesService'
 const emptyForm = {
     name: '',
     document: '',
@@ -27,6 +28,8 @@ export default function OwnersPage() {
     }
     useEffect(() => {
         loadOwners();
+        console.log(owners)
+        
     }, []);
     function handleChange(event) {
         const { name, value } = event.target;
@@ -103,6 +106,7 @@ export default function OwnersPage() {
     return (
         <div>
             <h1>Donos</h1>
+            <Link to="/dashboard">Dashboard</Link>
             <p>Gerencie os responsáveis pelos pets cadastrados.</p>
             {message && <p>{message}</p>}
             <hr />

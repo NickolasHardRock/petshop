@@ -5,8 +5,9 @@ import "./style.css"
 function Dashboard(){
     return(
         <>
+        <MainLayout>
             <h1 className="Dashboard">Dashboard</h1>
-            <MainLayout></MainLayout>
+            </MainLayout>
         </>
     )
 }

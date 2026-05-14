@@ -3,6 +3,7 @@ import Login from '../pages/login'
 import Dashboard from '../pages/dashboard'
 import PrivateRoute from "./PrivateRoute";
 import Pets from "../pages/pets";
+import Owners from "../pages/owners";
 
 function AppRoutes(){
     return(
@@ -19,7 +20,11 @@ function AppRoutes(){
                 <Pets/>
                 </PrivateRoute>
             }></Route>
-            
+            <Route path='/owners' element={
+                <PrivateRoute>
+                <Owners/>
+                </PrivateRoute>
+            }></Route>            
         </Routes>
     )
 }

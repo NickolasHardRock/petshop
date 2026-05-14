@@ -27,7 +27,7 @@ module.exports = {
   db: {
     dialect: process.env.DB_DIALECT || 'sqlite',
     storage: process.env.DB_STORAGE || './database.sqlite',
-    storageTest: process.env.DB_STORAGE_TEST || './database.test.sqlite',
+    storageTest: process.env.DB_STORAGE_TEST || './database.sqlite',
     logging: toBool(process.env.DB_LOGGING, false),
   },
   auth: {

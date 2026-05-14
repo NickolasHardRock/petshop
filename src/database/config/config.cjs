@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const shared = {
   dialect: 'sqlite',
-  storage: process.env.DB_STORAGE || path.resolve(__dirname, '../../database.sqlite'),
+  storage: process.env.DB_STORAGE || path.resolve(__dirname, './database.sqlite'),
   logging: (process.env.DB_LOGGING || 'false') === 'true',
   define: {
     underscored: true,
@@ -15,7 +15,7 @@ module.exports = {
   development: shared,
   test: {
     ...shared,
-    storage: process.env.DB_STORAGE_TEST || path.resolve(__dirname, '../../database.test.sqlite'),
+    storage: process.env.DB_STORAGE_TEST || path.resolve(__dirname, './database.sqlite'),
   },
   production: shared,
 };

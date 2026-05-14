@@ -6,7 +6,9 @@
     --white: #ffffff;
     --text-color:#333333;
     --border-radius: 8px;
-    --shadow: 0 4px 6px rgba(0,0,0,0.1)
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --error-color: #e74c3c;
+    --sidebar-width: 250px;
 }
 
 /* Laouyt basico para todas f4f7f6*/
@@ -23,6 +25,68 @@ body{
     color: var(--text-color);
     line-height: 1.6;
 }
+
+.app-container{
+    display: flex;
+    min-height: 100vh;
+}
+
+aside{
+    width: var(--sidebar-width);
+    background-color: var(--primary-color);
+     columns: var(--white);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+}
+
+aside h2{
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+aside nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+aside nav a{
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+aside nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Conteúdo Principal */
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.main-content button {
+  align-self: flex-end;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
 
 /*--  Componentes Comuns --*/
 
@@ -70,24 +134,29 @@ button:disabled{
 
 .footer {
   background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+  color: white;
+  padding: 1.5rem 0;
+  margin-top: auto;
   width: 100%;
-  position: relative; /* Ou absolute/fixed dependendo do layout */
-  bottom: 0;
 }
-
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
 .footer-links {
   list-style: none;
-  padding: 0;
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  gap: 1.5rem;
 }
-
 .footer-links a {
-  color: #fff;
+  color: #ccc;
   text-decoration: none;
+  font-size: 0.9rem;
 }
-
+.footer-links a:hover {
+  color: white;
+}

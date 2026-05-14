@@ -24,7 +24,7 @@ function MainLayout() {
                 <nav>
                     <Link to="/dashboard">Dashboard</Link>
                     <Link to="/pets">Pets</Link>
-                    <Link to="/#">Donos</Link>
+                    <Link to="/owners">Donos</Link>
                     <Link to="/#">Serviços</Link>
                     <Link to="/#">Tipos de Serviços</Link>
                     <Link to="/#">Usuarios</Link>

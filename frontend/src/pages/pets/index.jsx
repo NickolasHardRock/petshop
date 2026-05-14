@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ownersService, petsService } from '../../services/petsService'
+import {  petsService,ownersService } from '../../services/resoucesService'
 
 const emptyForm = {
     name: '',
@@ -18,7 +18,7 @@ export default function PetsPage() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [form, setForm] = useState(emptyForm);
-    const [editinPet, setEditingPet] = useState(null);
+    const [editingPet, setEditingPet] = useState(null);
     const [detailPet, setDetailPet] = useState(null);
     const [message, setMessage] = useState('');
 
@@ -129,6 +129,7 @@ export default function PetsPage() {
             clearForm();
             loadData();
         } catch (error) {
+            console.log(error)
             setMessage('Erroa ao salvar pet.');
         }
     }
@@ -199,7 +200,7 @@ export default function PetsPage() {
             <hr />
 
             <h2>
-                {editinPet ? 'Editar pet ' : 'Novo pet'}
+                {editingPet ? 'Editar pet ' : 'Novo pet'}
             </h2>
 
             <form onSubmit={handleSubmit}>
@@ -217,7 +218,7 @@ export default function PetsPage() {
                     <label>Espécie</label>
                     <br />
                     <input
-                        name="Species"
+                        name="species"
                         value={form.species}
                         onChange={handleChange}
                     />
@@ -229,6 +230,7 @@ export default function PetsPage() {
                     <input
                         name="breed"
                         value={form.breed}
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -303,10 +305,10 @@ export default function PetsPage() {
                 <br />
 
                 <button type="submit">
-                    {editinPet ? ' Salvar alterações' : 'Cadastrar pet'}
+                    {editingPet ? ' Salvar alterações' : 'Cadastrar pet'}
                 </button>
 
-                {editinPet && (
+                {editingPet && (
                     <button type="button" onClick={clearForm}>
                         Cancelar
                     </button>
