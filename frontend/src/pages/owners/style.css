@@ -1,0 +1,76 @@
+.owners-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.owners-container h1 {
+    color: #1e293b;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+/* Mensagens */
+.message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+.message.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.message.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* Seções */
+.form-section, .list-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Formulário */
+.owner-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.form-group.full-width { grid-column: 1 / -1; }
+
+.form-group label { font-size: 0.875rem; font-weight: 600; color: #475569; }
+
+.form-group input, .form-group textarea {
+    padding: 0.625rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem;
+}
+
+.form-actions { grid-column: 1 / -1; display: flex; gap: 1rem; }
+
+/* Botões */
+.btn-primary { background: #4a90e2; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-secondary { background: #f1f5f9; color: #475569; padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+/* Tabela */
+.owner-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.owner-table th { background: #f8fafc; padding: 1rem; text-align: left; color: #64748b; border-bottom: 2px solid #e2e8f0; }
+.owner-table td { padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+
+.actions-cell { display: flex; gap: 0.5rem; }
+.btn-icon { background: none; border: 1px solid #e2e8f0; padding: 0.4rem; border-radius: 6px; cursor: pointer; }
+
+/* Modal e Detalhes */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.detail-card { background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.pet-list { list-style: none; padding: 0; margin: 1rem 0; }
+.pet-list li { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 20px; display: inline-block; margin: 0 0.5rem 0.5rem 0; font-size: 0.85rem; }
+.btn-close { width: 100%; padding: 0.75rem; background: #1e293b; color: white; border: none; border-radius: 6px; cursor: pointer; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

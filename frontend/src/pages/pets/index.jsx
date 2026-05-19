@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import {Link, useNavigate } from "react-router-dom";
 import {  petsService,ownersService } from '../../services/resoucesService'
+import './style.css'
 
 const emptyForm = {
     name: '',
