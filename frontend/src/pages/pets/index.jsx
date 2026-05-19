@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import {Link, useNavigate } from "react-router-dom";
 import {  petsService,ownersService } from '../../services/resoucesService'
 
 const emptyForm = {
@@ -93,6 +94,14 @@ export default function PetsPage() {
 
     async function handleSubmit(event) {
         event.preventDefault();
+
+        if(
+            form.weight == 0 && form.weight < 0
+        ){
+            setMessage('Peso menor que zero');
+            return;
+        }
+
 
         if (
             !form.name ||
@@ -192,6 +201,7 @@ export default function PetsPage() {
             <h1>
                 Pets
             </h1>
+            <Link to="/dashboard">Dashboard</Link>
             <p>
                 Cadastre e acompanhe os animais atendidos pelo petshop.
             </p>

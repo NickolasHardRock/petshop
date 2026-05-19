@@ -48,6 +48,13 @@ export default function OwnersPage() {
             setMessage('Preencha todos os campos.');
             return;
         }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if(!emailRegex.test(form.email)){
+            setMessage('Por favor, insira um e-mail válido com @.');
+            return;
+        }
         try {
             if (editingOwner) {
                 await ownersService.update(editingOwner.id, form);

@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -21,13 +22,21 @@ const toList = (value, defaultValue = []) => {
     .filter(Boolean);
 };
 
+const resolveStoragePath = (storage) => {
+  if (!storage) {
+    return path.resolve(process.cwd(), 'database.sqlite');
+  }
+
+  return path.isAbsolute(storage) ? storage : path.resolve(process.cwd(), storage);
+};
+
 module.exports = {
   env: process.env.NODE_ENV || 'development',
   port: Number(process.env.PORT) || 3000,
   db: {
     dialect: process.env.DB_DIALECT || 'sqlite',
-    storage: process.env.DB_STORAGE || './database.sqlite',
-    storageTest: process.env.DB_STORAGE_TEST || './database.sqlite',
+    storage: resolveStoragePath(process.env.DB_STORAGE),
+    storageTest: resolveStoragePath(process.env.DB_STORAGE_TEST || './database.test.sqlite'),
     logging: toBool(process.env.DB_LOGGING, false),
   },
   auth: {

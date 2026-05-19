@@ -18,9 +18,18 @@ function Login(){
 
 
     async function handleSubmit(e){
-        e.preventDefault()
+        e.preventDefault();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if(!emailRegex.test(email)){
+            setError('Por favor, insira um e-mail válido com @.');
+            return;
+        }
+        
         setError("")
         setLoading(true)
+
+        alert('Login valido com sucesso!');
 
         try{
             await login(email,password)
@@ -44,9 +53,9 @@ function Login(){
                 type="email"
                 placeholder="E-mail"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}>
-                </input>
-
+                onChange={(e)=>setEmail(e.target.value)}
+                />
+    
                 <input
                 type="password"
                 placeholder="Senha"
