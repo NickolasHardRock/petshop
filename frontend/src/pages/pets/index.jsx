@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import {Link, useNavigate } from "react-router-dom";
-import {  petsService,ownersService } from '../../services/resoucesService'
+import { Link, useNavigate } from "react-router-dom";
+import { petsService, ownersService } from '../../services/resoucesService'
 import './style.css'
 
 const emptyForm = {
@@ -96,9 +96,9 @@ export default function PetsPage() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        if(
+        if (
             form.weight == 0 && form.weight < 0
-        ){
+        ) {
             setMessage('Peso menor que zero');
             return;
         }
@@ -159,6 +159,18 @@ export default function PetsPage() {
         });
     }
 
+    function renderOwnersMessage(ownersList) {
+        if (ownersList.length === 0) {
+            return (
+                <div className="empty-state-container">
+                    <p> Ops! Ainda não temos donos cadastrados.</p>
+                    <p>Que tal começar cadastrando o primeiro responsável agora mesmo?</p>
+                </div>
+            )
+        }
+    }
+
+
     async function handleDetails(pet) {
         try {
             const data = await petsService.getById(pet.id);
@@ -189,7 +201,8 @@ export default function PetsPage() {
             pet.name?.toLowerCase().includes(term) ||
             pet.species?.toLowerCase().includes(term) ||
             pet.breed?.toLowerCase().includes(term) ||
-            pet.owner?.name?.toLowerCase().includes(term)
+            pet.owner?.name?.toLowerCase().includes(term) ||
+            pet.notes?.toLowerCase().includes(term)
         );
     });
 
@@ -198,220 +211,229 @@ export default function PetsPage() {
     }
 
     return (
-        <div>
+
+
+        <div className="pets-container">
             <h1>
                 Pets
             </h1>
             <Link to="/dashboard">Dashboard</Link>
-            <p>
+            <p className="description">
                 Cadastre e acompanhe os animais atendidos pelo petshop.
             </p>
-            {message && <p>{message}</p>}
+            {message && <p>{`message ${message.includes('Erro') ? 'error' : 'sucess'}`}</p>}
 
-            <hr />
+            <section className="form-group">
 
-            <h2>
-                {editingPet ? 'Editar pet ' : 'Novo pet'}
-            </h2>
+                <h2>
+                    {editingPet ? 'Editar pet ' : 'Novo pet'}
+                </h2>
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nome</label>
-                    <br />
+                <form onSubmit={handleSubmit} className="pet-form">
+                    <div className="form-group">
+                        <label>Nome</label>
+                        <input
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Espécie</label>
+
+                        <input
+                            name="species"
+                            value={form.species}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Raça</label>
+
+                        <input
+                            name="breed"
+                            value={form.breed}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <labe>Porte</labe>
+
+                        <select
+                            name="size"
+                            value={form.size}
+                            onChange={handleChange}
+                        >
+                            <option value="small">Pequeno</option>
+                            <option value="medium">Médio</option>
+                            <option value="large">Grande</option>
+                        </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Idade</label>
+
+                        <input
+                            type="number"
+                            name="age"
+                            min="0"
+                            value={form.age}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Peso kg</label>
+                        <input
+                            type="number"
+                            name="weight"
+                            min="0"
+                            step="0.1"
+                            value={form.weight}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group full-width">
+                        <label>Dono</label>
+                        {owners.length === 0 ? (
+                            <div className="owner-alert">
+                                <p>⚠️ <strong>Nenhum dono encontrado!</strong></p>
+                                <p>Você precisa <Link to="/owners" style={{ color: '#4a90e2', fontWeight: 'bold' }}>cadastrar um dono</Link> antes de adicionar um pet.</p>
+                            </div>
+                        ) : (
+                            <select name="ownerId" value={form.ownerId} onChange={handleChange}>
+                                <option value="">Selecione o responsável</option>
+                                {owners.map((owner) => (
+                                    <option key={owner.id} value={owner.id}>
+                                        {owner.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </div>
+
+                    <div className="form-group full-width">
+                        <label>Observações</label>
+
+                        <textarea
+                            name="notes"
+                            value={form.notes}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-actions">
+                        <button type="submit">
+                            {editingPet ? ' Salvar alterações' : 'Cadastrar pet'}
+                        </button>
+
+                        {editingPet && (
+                            <button type="button" onClick={clearForm} className="btn-secondary">
+                                Cancelar
+                            </button>
+                        )}
+                    </div>
+
+                </form>
+
+            </section>
+
+            <section className="list-section">
+                <div className="list-header">
+
+                    <h2>Lista de pets</h2>
+
                     <input
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
+                        placeholder="Buscar por nome, espécie, raça, dono ou observação"
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
                     />
                 </div>
 
-                <div>
-                    <label>Espécie</label>
-                    <br />
-                    <input
-                        name="species"
-                        value={form.species}
-                        onChange={handleChange}
-                    />
-                </div>
+                {filteredPets.length === 0 ? (
+                    <p className="empty-list">Nenhum pet encontrado.</p>
+                ) : (
+                    <div className="table-responsive">
+                        <table className="pet-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Espécie</th>
+                                    <th>Raça</th>
+                                    <th>Porte</th>
+                                    <th>Dono</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredPets.map((pet) => (
+                                    <tr key={pet.id}>
+                                        <td>{pet.name}</td>
+                                        <td>{pet.species}</td>
+                                        <td>{pet.breed}</td>
+                                        <td>{getSizeText(pet.size)}</td>
+                                        <td>{pet.owner?.name || '-'}</td>
+                                        <td>
+                                            <button onClick={() => handleDetails(pet)}>
+                                                Detalhes
+                                            </button>
 
-                <div>
-                    <label>Raça</label>
-                    <br />
-                    <input
-                        name="breed"
-                        value={form.breed}
-                        onChange={handleChange}
-                    />
-                </div>
+                                            <button onClick={() => handleEdit(pet)}>
+                                                Editar
+                                            </button>
 
-                <div>
-                    <labe>Porte</labe>
-                    <br />
-                    <select
-                        name="size"
-                        value={form.size}
-                        onChange={handleChange}
-                    >
-                        <option value="small">Pequeno</option>
-                        <option value="medium">Médio</option>
-                        <option value="large">Grande</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Idade</label>
-                    <br />
-                    <input
-                        type="number"
-                        name="age"
-                        min="0"
-                        value={form.age}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div>
-                    <label>Peso kg</label>
-                    <br />
-                    <input
-                        type="number"
-                        name="weight"
-                        min="0"
-                        step="0.1"
-                        value={form.weight}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div>
-                    <label>Dono</label>
-                    <br />
-                    <select
-                        name="ownerId"
-                        value={form.ownerId}
-                        onChange={handleChange}
-                    >
-                        <option value="">
-                            Selecione
-                        </option>
-                        {owners.map((owner) => (
-                            <option key={owner.id} value={owner.id}>
-                                {owner.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div>
-                    <label>Observações</label>
-                    <br />
-                    <textarea
-                        name="notes"
-                        value={form.notes}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <br />
-
-                <button type="submit">
-                    {editingPet ? ' Salvar alterações' : 'Cadastrar pet'}
-                </button>
-
-                {editingPet && (
-                    <button type="button" onClick={clearForm}>
-                        Cancelar
-                    </button>
+                                            <button onClick={() => handleDelete(pet)}>
+                                                Excluir
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 )}
-            </form>
-
-            <hr />
-
-            <h2>Lista de pets</h2>
-
-            <input
-                placeholder="Buscar por nome, espécie, raça ou dono"
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-            />
-
-            <br />
-            <br />
-
-            {filteredPets.length === 0 ? (
-                <p>Nenhum pet encontrado.</p>
-            ) : (
-                <table border="1" cellPadding="5">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Espécie</th>
-                            <th>Raça</th>
-                            <th>Porte</th>
-                            <th>Dono</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredPets.map((pet) => (
-                            <tr key={pet.id}>
-                                <td>{pet.name}</td>
-                                <td>{pet.species}</td>
-                                <td>{pet.breed}</td>
-                                <td>{getSizeText(pet.size)}</td>
-                                <td>{pet.owner?.name || '-'}</td>
-                                <td>
-                                    <button onClick={() => handleDetails(pet)}>
-                                        Detalhes
-                                    </button>
-
-                                    <button onClick={() => handleEdit(pet)}>
-                                        Editar
-                                    </button>
-
-                                    <button onClick={() => handleDelete}>
-                                        Excluir
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+            </section >
 
             {detailPet && (
-                <div>
-                    <hr />
+                <div className="detail-card">
 
-                    <h2>Detalhes do Pet</h2>
-                    <p><strong>Nome:</strong> {detailPet.name}</p>
-                    <p><strong>Dono:</strong> {detailPet.owner?.name || '-'}</p>
-                    <p><strong>Espécie:</strong> {detailPet.species}</p>
-                    <p><strong>Raça:</strong> {detailPet.breed}</p>
-                    <p><strong>Porte:</strong> {getSizeText(detailPet.size)}</p>
-                    <p><strong>Peso:</strong> {detailPet.weight} kg</p>
-                    <p><strong>Observações:</strong> {detailPet.notes || 'Sem observações.'}</p>
-                    <h3>Histórico recente</h3>
-                    {detailPet.services?.length > 0 ? (
-                        <ul>
-                            {detailPet.services.slice(0, 4).map((service) => (
-                                <li key={service.id}>
-                                    {service.serviceType?.name || 'Serviço'} -{' '}
-                                    {formatDate(service.serviceDate)} -{' '}
-                                    {formatMoney(service.chargedAmount)} -{' '}
-                                    {getStatusText(service.status)}
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>Nenhum atendimento registrado.</p>
-                    )}
-                    <button onClick={() => setDetailPet(null)}>
-                        Fechar detalhes
-                    </button>
+                    <div className="detail-card">
+                        <h2>Detalhes do Pet</h2>
+                        <div className="detail-grid">
+                            <p><strong>Nome:</strong> {detailPet.name}</p>
+                            <p><strong>Dono:</strong> {detailPet.owner?.name || '-'}</p>
+                            <p><strong>Espécie:</strong> {detailPet.species}</p>
+                            <p><strong>Raça:</strong> {detailPet.breed}</p>
+                            <p><strong>Porte:</strong> {getSizeText(detailPet.size)}</p>
+                            <p><strong>Peso:</strong> {detailPet.weight}</p>
+                            <p className="full-width"><strong>Observações:</strong> {detailPet.notes || 'Sem observações.'}</p>
+                        </div>
+
+                        <h3>Histórico recente</h3>
+                        {detailPet.services?.length > 0 ? (
+                            <ul className="service-list">
+                                {detailPet.services.slice(0, 4).map((service) => (
+                                    <li key={service.id}>
+                                        {service.serviceType?.name || 'Serviço'} -{' '}
+                                        {formatDate(service.serviceDate)} -{' '}
+                                        {formatMoney(service.chargedAmount)} -{' '}
+                                        {getStatusText(service.status)}
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="no-services">Nenhum atendimento registrado.</p>
+                        )}
+                        <button className="btn-close" onClick={() => setDetailPet(null)}>
+                            Fechar detalhes
+                        </button>
+                    </div>
                 </div>
             )}
-        </div>
+        </div >
     );
 }

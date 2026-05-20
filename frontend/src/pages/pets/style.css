@@ -1,32 +1,130 @@
+.pets-container {
+    animation: fadeIn 0.5s ease-in-out;
+    margin: 40px;
+}
 
-h1.Pets{
+.pets-container h1 {
+    color: #1e293b;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+/* Mensagens */
+.message {
+    padding: 1rem;
+    border-radius: 8px;
     margin-bottom: 1.5rem;
-    color: #2c3e50;
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 0.5rem;
+    font-weight: 500;
+}
+.message.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.message.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* Seções */
+.form-section, .list-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    margin-bottom: 2rem;
+}
+
+/* Formulário */
+.pet-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.form-group.full-width { grid-column: 1 / -1; }
+
+.form-group label { font-size: 0.875rem; font-weight: 600; color: #475569; }
+
+.form-group input, .form-group textarea, .form-group select {
+    padding: 0.625rem; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem;
+}
+
+.form-actions { grid-column: 1 / -1; display: flex; gap: 1rem; }
+
+/* Botões */
+.btn-primary { background: #4a90e2; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-secondary { background: #f1f5f9; color: #475569; padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+/* Tabela */
+.pet-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+.pet-table th { background: #f8fafc; padding: 1rem; text-align: left; color: #64748b; border-bottom: 2px solid #e2e8f0; }
+.pet-table td { padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+
+.actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center; /* Centraliza os botões de ação */
+}
+.btn-icon { background: none; border: 1px solid #e2e8f0; padding: 0.4rem; border-radius: 6px; cursor: pointer; }
+
+/* Busca */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.list-header h2 {
+    font-size: 1.5rem;
+    color: #1e293b;
+}
+
+.search-input {
+    padding: 0.625rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    width: 300px; /* Ajuste conforme necessário */
+}
+
+.empty-list, .no-services {
+    color: #64748b;
+    text-align: center;
+    padding: 2rem;
+    border: 1px dashed #e2e8f0;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+/* Modal e Detalhes */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+.detail-card { background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 600px; }
+.detail-card h2 { color: #1e293b; margin-bottom: 1rem; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+.detail-grid p { margin: 0; }
+.detail-grid p.full-width { grid-column: 1 / -1; }
+.detail-card h3 { color: #1e293b; margin-top: 1.5rem; margin-bottom: 1rem; }
+
+.service-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.service-list li {
+    background: #f1f5f9;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     display: inline-block;
+    margin: 0 0.5rem 0.5rem 0;
+    font-size: 0.85rem;
+    color: #475569;
 }
 
-/* Estilo para tabelas (se houver) */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
+.btn-close { width: 100%; padding: 0.75rem; background: #1e293b; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 1.5rem; }
 
-th, td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-th {
-background-color: #f8f9fa;
-font-weight: 600;
-color: #666;
-}
-tr:hover {
-background-color: #f1f7ff;
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

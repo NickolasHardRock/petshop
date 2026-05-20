@@ -114,7 +114,7 @@ export default function OwnersPage() {
         return <p>Carregando donos...</p>;
     }
     return (
-
+        <MainLayout>
         <div className='owners-container'>
             <h1>Donos</h1>
             <Link to="/dashboard">Dashboard</Link>
@@ -266,6 +266,7 @@ export default function OwnersPage() {
                     </div>
             )}
                 </div>
-        
+            </MainLayout>
     );
+    
 }
