@@ -4,27 +4,21 @@ import Dashboard from '../pages/dashboard'
 import PrivateRoute from "./PrivateRoute";
 import Pets from "../pages/pets";
 import Owners from "../pages/owners";
+import MainLayout from "../layouts/MainLayout";
 
 function AppRoutes(){
     return(
         <Routes>
             <Route path='/' element={<Login></Login>}></Route>
-            <Route path='/dashboard' 
-                element={
+            <Route element={
                 <PrivateRoute>
-                <Dashboard/>
+                    <MainLayout></MainLayout>
                 </PrivateRoute>
-            }></Route>
-            <Route path='/pets' element={
-                <PrivateRoute>
-                <Pets/>
-                </PrivateRoute>
-            }></Route>
-            <Route path='/owners' element={
-                <PrivateRoute>
-                <Owners/>
-                </PrivateRoute>
-            }></Route>            
+            }
+            ></Route>
+            <Route path='/dashboard' element={<Dashboard/>}></Route>
+            <Route path='/pets' element={<Pets/>}></Route>
+            <Route path='/owners' element={<Owners/>}></Route>            
         </Routes>
     )
 }

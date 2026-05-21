@@ -1,0 +1,10 @@
+.active{
+    font-weight: bold;
+    color: #010202;
+    background-color: #519beb;
+    border-left: 3px solid #007bff;
+}
+
+.NavLink{
+    color: black;
+}

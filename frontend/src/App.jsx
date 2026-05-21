@@ -6,14 +6,16 @@ import { BrowserRouter } from 'react-router-dom'
 import AppRoutes from './routes'
 import Footer from './layouts/Footer'
 import './App.css'
+import MainLayout from './layouts/MainLayout'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <BrowserRouter>
-
+      
       <AppRoutes />
+      
       <Footer/>
     </BrowserRouter>
     

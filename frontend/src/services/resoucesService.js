@@ -17,3 +17,7 @@ export const petsService = {
     update:(id,payload) => api.put(`/pets/${id}`,payload).then(unwrap),
     remove: (id) => api.delete(`/pets/${id}`).then(unwrap),
 };
+
+export const service = {
+    list:() => api.get('/services').then(unwrap),
+}
