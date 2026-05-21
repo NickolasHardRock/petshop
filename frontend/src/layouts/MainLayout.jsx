@@ -20,8 +20,8 @@ function MainLayout() {
     return (
         <div className="app-container">
             <Sidebar />
-            <main>
-                <Outlet></Outlet>
+            <main className="main-content">
+                <Outlet/>
             </main>
         </div>
 
