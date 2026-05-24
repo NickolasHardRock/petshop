@@ -10,18 +10,28 @@ import './style.css'
 function MainLayout() {
 
     const { logout } = useContext(AuthContext)
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
-    function handleLogout() {
-        logout()
+    async function handleLogout() {
+       try{
+        await logout()
+       }catch(err){
+        console.error(err)
+       }
         navigate('/')
     }
 
     return (
         <div className="app-container">
-            <Sidebar />
+                <Sidebar onLogout={handleLogout} />
+            
             <main className="main-content">
-                <Outlet/>
+                <div className="content-inner">
+
+                    <Outlet />
+
+                </div>
+
             </main>
         </div>
 

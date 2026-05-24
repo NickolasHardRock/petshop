@@ -3,16 +3,19 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import './style.css'
 
-
-
-
-function Sidebar() {
+export default function Sidebar({onLogout}) {
 
     const { logout } = useContext(AuthContext)
-    const navigate = useNavigate
+    const navigate = useNavigate();
 
     function handleLogout(){
+        if(onLogout) return onLogout();
+        try{
+            
         logout()
+        }catch(err){
+            console.error(err)
+        }
         navigate('/')
     }
 
@@ -28,21 +31,22 @@ function Sidebar() {
 
     return (
         
-            <aside>
+            <aside className="sidebar-aside">
                 <h2>
                     PetShop
                 </h2>
-                <nav className="sidebar">
+                <nav className="sidebar-nav">
                     {MenuItems.map((item,index) => (
-                        <NavLink className="NavLink" key={index} to={item.path}></NavLink>
+                        <NavLink className="NavLink" key={index} to={item.path}
+                        className={({isActive}) => (isActive ? "NavLink active": "NavLink")}>
+                        {item.label}
+                        </NavLink>
                     ))}
                 </nav>
             
             
-                <button onClick={handleLogout}>Sair</button>
-                <Outlet/>
+                <button className="logout-btn" onClick={handleLogout}>Sair</button>
+                
             </aside>
     );
 }
-
-export default Sidebar

@@ -1,25 +1,37 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import AppRoutes from './routes'
 import Footer from './layouts/Footer'
 import './App.css'
 import MainLayout from './layouts/MainLayout'
+import Sidebar from './components/Sidebar/Sidebar'
+import { AuthContext } from './contexts/AuthContext';
+import { useContext } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppContent() {
 
+  const location = useLocation();
+
+  const hideSidebarOn = ['/', '/login']
+  const hideSidebar = hideSidebarOn.includes(location.pathname);
   return (
-    <BrowserRouter>
-       
-      <AppRoutes />
-      
-      <Footer/>
-    </BrowserRouter>
-    
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      {!hideSidebar && <Sidebar />
+      }
+      <div style={{ flex: 1 }}>
+
+        <AppRoutes />
+
+        <Footer />
+      </div>
+    </div>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  )
+}
