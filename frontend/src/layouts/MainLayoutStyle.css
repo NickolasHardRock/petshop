@@ -1,0 +1,65 @@
+/* src/layouts/style.css */
+
+:root{
+    --primary-color: #4a90e2;
+    --secondary-color: #2c3e50;
+    --acent-color: #27ae60;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --text-color:#333333;
+    --border-radius: 8px;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    --error-color: #e74c3c;
+    --sidebar-width: 250px;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+
+/* Container principal ocupa toda a altura da tela */
+.app-container {
+  display: flex;
+  flex-direction: column; /* só conteúdo, sem sidebar */
+  min-height: 100vh;
+  background: #f5f7fb; /* cor de fundo suave */
+  color: #111827;      /* cor padrão do texto */
+}
+
+/* Área principal */
+.main-content {
+  flex: 1 1 auto;          /* ocupa todo o espaço disponível */
+  padding: 24px;           /* espaçamento interno */
+  box-sizing: border-box;
+  min-width: 0;            /* evita quebra em tabelas largas */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Conteúdo interno centralizado */
+.content-inner {
+  width: 100%;
+  max-width: 1200px;       /* limita largura para leitura confortável */
+  margin: 0 auto;          /* centraliza horizontalmente */
+  box-sizing: border-box;
+  overflow-x: auto;        /* scroll horizontal se necessário */
+}
+
+/* Títulos */
+.content-inner h1,
+.content-inner h2 {
+  margin-top: 0;
+  font-weight: 600;
+  color: #2c3e50;
+}

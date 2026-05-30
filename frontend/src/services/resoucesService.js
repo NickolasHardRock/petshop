@@ -19,5 +19,9 @@ export const petsService = {
 };
 
 export const service = {
-    list:() => api.get('/services').then(unwrap),
-}
+    list: () => api.get('/services').then(unwrap),
+    getById: (id) => api.get(`/services/${id}`).then(unwrap),
+    create: (payload) => api.post('/services', payload).then(unwrap),
+    update: (id, payload) => api.put(`/services/${id}`, payload).then(unwrap),
+    remove: (id) => api.delete(`/services/${id}`).then(unwrap),
+};

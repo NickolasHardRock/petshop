@@ -1,30 +1,15 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar/Sidebar"
-import './style.css'
-
-
+import DashboardMenu from "../components/DashboardMenu/DashBoardMenu";
+import './MainLayoutStyle.css'
 
 
 function MainLayout() {
 
-    const { logout } = useContext(AuthContext)
-    const navigate = useNavigate();
-
-    async function handleLogout() {
-       try{
-        await logout()
-       }catch(err){
-        console.error(err)
-       }
-        navigate('/')
-    }
-
     return (
         <div className="app-container">
-                <Sidebar onLogout={handleLogout} />
-            
+            <DashboardMenu/>
             <main className="main-content">
                 <div className="content-inner">
 

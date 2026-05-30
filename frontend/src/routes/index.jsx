@@ -4,6 +4,7 @@ import Dashboard from '../pages/dashboard'
 import PrivateRoute from "./PrivateRoute";
 import Pets from "../pages/pets";
 import Owners from "../pages/owners";
+import Service from "../pages/service"
 
 function AppRoutes() {
     return (
@@ -25,12 +26,12 @@ function AppRoutes() {
                 <Owners/>
                 </PrivateRoute>
             }></Route>
-            {/* <Route path='/services' element={
+            <Route path='/services' element={
                 <PrivateRoute>
                 <Service/>
                 </PrivateRoute>
             }></Route>
-            <Route path='/typeServices' element={
+            {/* <Route path='/typeServices' element={
                 <PrivateRoute>
                 <TypeService/>
                 </PrivateRoute>

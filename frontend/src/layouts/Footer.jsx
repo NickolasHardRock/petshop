@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import '../App.css';
-
+import './FooterStyle.css'
 const Footer = () =>{
     return(
         <footer className="footer">
