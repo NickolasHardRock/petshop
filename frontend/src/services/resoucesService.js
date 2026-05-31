@@ -18,10 +18,25 @@ export const petsService = {
     remove: (id) => api.delete(`/pets/${id}`).then(unwrap),
 };
 
-export const service = {
+export const serviceType = {
+    list: () => api.get('/service-types').then(unwrap),
+    getById: (id) => api.get(`/service-types/${id}`).then(unwrap),
+    create: (payload) => api.post('/service-types', payload).then(unwrap),
+    update: (id, payload) => api.put(`/service-types/${id}`, payload).then(unwrap),
+    remove: (id) => api.delete(`/service-types/${id}`).then(unwrap),
+};
+
+export const serviceRecordsService = {
     list: () => api.get('/services').then(unwrap),
     getById: (id) => api.get(`/services/${id}`).then(unwrap),
     create: (payload) => api.post('/services', payload).then(unwrap),
     update: (id, payload) => api.put(`/services/${id}`, payload).then(unwrap),
     remove: (id) => api.delete(`/services/${id}`).then(unwrap),
+};
+
+export const usersService = {
+    list: () => api.get('/users').then(unwrap),
+    getById: (id) => api.get(`/users/${id}`).then(unwrap),
+    update: (id, payload) => api.put(`/users/${id}`, payload).then(unwrap),
+    remove: (id) => api.delete(`/users/${id}`).then(unwrap),
 };

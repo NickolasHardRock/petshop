@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { petsService, ownersService } from '../../services/resoucesService'
+import MainLayout from '../../layouts/MainLayout';
 import './style.css'
 
 const emptyForm = {
@@ -129,7 +130,7 @@ export default function PetsPage() {
 
         try {
             if (editingPet) {
-                await petsService.update(editinPet.id, payload);
+                await petsService.update(editingPet.id, payload);
                 setMessage('Pet atualizado com sucesso.');
             } else {
                 await petsService.create(payload);
@@ -207,20 +208,18 @@ export default function PetsPage() {
     });
 
     if (loading) {
-        return <p>Carregando pets...</p>;
+        return <MainLayout><p>Carregando pets...</p></MainLayout>;
     }
 
     return (
-
-
-        <div className="pets-container">
-            <h1>
-                Pets
-            </h1>
-            <Link to="/dashboard">Dashboard</Link>
-            <p className="description">
-                Cadastre e acompanhe os animais atendidos pelo petshop.
-            </p>
+        <MainLayout>
+            <div className="pets-container">
+                <h1>
+                    Pets
+                </h1>
+                <p className="description">
+                    Cadastre e acompanhe os animais atendidos pelo petshop.
+                </p>
             {message && <p>{`message ${message.includes('Erro') ? 'error' : 'sucess'}`}</p>}
 
             <section className="form-group">
@@ -435,5 +434,6 @@ export default function PetsPage() {
                 </div>
             )}
         </div >
+        </MainLayout>
     );
 }

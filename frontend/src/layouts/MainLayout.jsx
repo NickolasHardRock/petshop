@@ -5,25 +5,24 @@ import DashboardMenu from "../components/DashboardMenu/DashBoardMenu";
 import './MainLayoutStyle.css'
 
 
-function MainLayout() {
+function MainLayout({ children }) {
 
     return (
         <div className="app-container">
-            <DashboardMenu/>
+            <DashboardMenu />
             <main className="main-content">
                 <div className="content-inner">
 
-                    <Outlet />
+                    {children ?? <Outlet />}
 
                 </div>
 
             </main>
         </div>
-
     )
 
-
-
 }
+
+
 
 export default MainLayout
