@@ -68,7 +68,7 @@ function Dashboard(){
                             <article key={service.id} className="service-card">
                                 <h3>{service.serviceType?.name ?? 'Serviço'}</h3>
                                 <p><strong>Pet:</strong> {service.pet?.name ?? '-'}</p>
-                                <p><strong>Data:</strong> {formatDate(service.scheduledAt)}</p>
+                                <p><strong>Data:</strong> {formatDate(service.serviceDate)}</p>
                                 <p><strong>Status:</strong> {service.status}</p>
                                 <p><strong>ID:</strong> {service.id}</p>
                             </article>

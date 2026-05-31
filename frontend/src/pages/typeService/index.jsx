@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
-import { serviceType } from '../../services/resoucesService'
+import { petsService, serviceRecordsService, serviceType } from '../../services/resoucesService'
 
 const emptyForm = {
     name: '',
@@ -9,20 +8,34 @@ const emptyForm = {
     basePrice: '',
 };
 
+const emptySchedule = {
+    petId: '',
+    serviceTypeId: '',
+    serviceDate: '',
+    notes: '',
+};
+
 export default function TypeServicesPage() {
     const [types, setTypes] = useState([]);
+    const [pets, setPets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [form, setForm] = useState(emptyForm);
     const [editingType, setEditingType] = useState(null);
     const [detailType, setDetailType] = useState(null);
     const [message, setMessage] = useState('');
+    const [scheduleForm, setScheduleForm] = useState(emptySchedule);
+    const [scheduleMessage, setScheduleMessage] = useState('');
 
     async function loadData() {
         try {
             setLoading(true);
-            const typesData = await serviceType.list();
+            const [typesData, petsData] = await Promise.all([
+                serviceType.list(),
+                petsService.list(),
+            ]);
             setTypes(typesData);
+            setPets(petsData);
         } catch (error) {
             setMessage('Erro ao carregar os dados.');
         } finally {
@@ -42,9 +55,21 @@ export default function TypeServicesPage() {
         });
     }
 
+    function handleScheduleChange(event) {
+        const { name, value } = event.target;
+        setScheduleForm({
+            ...scheduleForm,
+            [name]: value,
+        });
+    }
+
     function clearForm() {
         setForm(emptyForm);
         setEditingType(null);
+    }
+
+    function clearScheduleForm() {
+        setScheduleForm(emptySchedule);
     }
 
     function formatMoney(value) {
@@ -86,6 +111,50 @@ export default function TypeServicesPage() {
             loadData();
         } catch (error) {
             setMessage('Erro ao salvar tipo de serviço.');
+        }
+    }
+
+    async function handleScheduleSubmit(event) {
+        event.preventDefault();
+        setScheduleMessage('');
+
+        if (!scheduleForm.serviceTypeId) {
+            setScheduleMessage('Escolha um tipo de serviço.');
+            return;
+        }
+
+        if (!scheduleForm.petId) {
+            setScheduleMessage('Escolha um pet para o serviço.');
+            return;
+        }
+
+        if (!scheduleForm.serviceDate) {
+            setScheduleMessage('Informe a data e hora do serviço.');
+            return;
+        }
+
+        const selectedType = types.find((type) => type.id === Number(scheduleForm.serviceTypeId));
+        if (!selectedType) {
+            setScheduleMessage('Tipo de serviço inválido.');
+            return;
+        }
+
+        const payload = {
+            petId: Number(scheduleForm.petId),
+            serviceTypeId: Number(scheduleForm.serviceTypeId),
+            serviceDate: new Date(scheduleForm.serviceDate).toISOString(),
+            chargedAmount: Number(selectedType.basePrice),
+            notes: scheduleForm.notes,
+            status: 'scheduled',
+        };
+
+        try {
+            await serviceRecordsService.create(payload);
+            setScheduleMessage('Serviço agendado com sucesso.');
+            clearScheduleForm();
+        } catch (error) {
+            const backendMessage = error?.response?.data?.message;
+            setScheduleMessage(backendMessage ? `Erro ao agendar o serviço: ${backendMessage}` : 'Erro ao agendar o serviço.');
         }
     }
 
@@ -161,6 +230,52 @@ export default function TypeServicesPage() {
                     </form>
                 </section>
 
+                <section className="schedule-section">
+                    <h2>Agendar serviço para um pet</h2>
+                    {scheduleMessage && <p className={`message ${scheduleMessage.includes('Erro') ? 'error' : 'success'}`}>{scheduleMessage}</p>}
+                    <form onSubmit={handleScheduleSubmit} className="owner-form">
+                        <div className="form-group">
+                            <label>Tipo de serviço *</label>
+                            <select name="serviceTypeId" value={scheduleForm.serviceTypeId} onChange={handleScheduleChange}>
+                                <option value="">Selecione um tipo de serviço</option>
+                                {types.map((type) => (
+                                    <option key={type.id} value={type.id}>{type.name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Pet *</label>
+                            <select name="petId" value={scheduleForm.petId} onChange={handleScheduleChange}>
+                                <option value="">Selecione um pet</option>
+                                {pets.map((pet) => (
+                                    <option key={pet.id} value={pet.id}>{pet.name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Data e hora *</label>
+                            <input
+                                type="datetime-local"
+                                name="serviceDate"
+                                value={scheduleForm.serviceDate}
+                                onChange={handleScheduleChange}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Observações</label>
+                            <textarea name="notes" value={scheduleForm.notes} onChange={handleScheduleChange} />
+                        </div>
+
+                        <div className="form-actions">
+                            <button type="submit">Agendar serviço</button>
+                            <button type="button" onClick={clearScheduleForm}>Limpar</button>
+                        </div>
+                    </form>
+                </section>
+
                 <section className="list-section">
                     <h2>Lista de tipos de serviços</h2>
                     <input
@@ -186,9 +301,13 @@ export default function TypeServicesPage() {
                                         <td>{type.description || '-'}</td>
                                         <td>{formatMoney(type.basePrice)}</td>
                                         <td>
-                                            <button onClick={() => handleDetails(type)}>Detalhes</button>
-                                            <button onClick={() => handleEdit(type)}>Editar</button>
-                                            <button onClick={() => handleDelete(type)}>Excluir</button>
+                                            <button type="button" onClick={() => handleDetails(type)}>Detalhes</button>
+                                            <button type="button" onClick={() => handleEdit(type)}>Editar</button>
+                                            <button type="button" onClick={() => setScheduleForm({
+                                                ...scheduleForm,
+                                                serviceTypeId: String(type.id),
+                                            })}>Agendar este tipo</button>
+                                            <button type="button" onClick={() => handleDelete(type)}>Excluir</button>
                                         </td>
                                     </tr>
                                 ))}
