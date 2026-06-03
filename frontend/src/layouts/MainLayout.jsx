@@ -1,34 +1,28 @@
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import Sidebar from "../components/Sidebar/Sidebar"
-import './style.css'
+import DashboardMenu from "../components/DashboardMenu/DashBoardMenu";
+import './MainLayoutStyle.css'
 
 
-
-
-function MainLayout() {
-
-    const { logout } = useContext(AuthContext)
-    const navigate = useNavigate
-
-    function handleLogout() {
-        logout()
-        navigate('/')
-    }
+function MainLayout({ children }) {
 
     return (
         <div className="app-container">
-            <Sidebar />
+            <DashboardMenu />
             <main className="main-content">
-                <Outlet/>
+                <div className="content-inner">
+
+                    {children ?? <Outlet />}
+
+                </div>
+
             </main>
         </div>
-
     )
 
-
-
 }
+
+
 
 export default MainLayout

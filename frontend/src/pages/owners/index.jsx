@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { ownersService } from '../../services/resoucesService'
 import MainLayout from '../../layouts/MainLayout'
-import './style.css'
+
 const emptyForm = {
     name: '',
     document: '',
@@ -117,7 +117,6 @@ export default function OwnersPage() {
         <MainLayout>
         <div className='owners-container'>
             <h1>Donos</h1>
-            <Link to="/dashboard">Dashboard</Link>
             <p className='description'>Gerencie os responsáveis pelos pets cadastrados.</p>
 
             {message && <p className={`message ${message.includes('Erro') ? 'error' : 'success'}`}>{message}</p>}
